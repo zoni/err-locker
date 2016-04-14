@@ -1,0 +1,13 @@
+[Core]
+module = locker
+name = Locker
+
+[Documentation]
+description = Lock things to let people know you're using them.
+
+[Python]
+version = 2+
+
+[Errbot]
+min = 4.0.0
+
