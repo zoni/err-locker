@@ -28,7 +28,7 @@ class Locker(BotPlugin):
         """
         Lock something.
         """
-        return self._lock(args.what, str(message.frm), args.message)
+        return self._lock(args.what, str(message.frm.person), args.message)
 
     def _lock(self, what, by, message=None):
         with self.threadlock:
@@ -56,7 +56,7 @@ class Locker(BotPlugin):
     @arg_botcmd('what', type=str)
     @arg_botcmd('-f', '--force', action="store_true", unpack_args=False)
     def unlock(self, message, args):
-        return self._unlock(args.what, str(message.frm), args.force)
+        return self._unlock(args.what, str(message.frm.person), args.force)
 
     def _unlock(self, what, by, force=False):
         with self.threadlock:
@@ -104,9 +104,9 @@ class Locker(BotPlugin):
 
     @re_botcmd(pattern=r'^lock ([\w]+)( |\.)?$', prefixed=False)
     def re_lock(self, message, match):
-        return self._lock(match.group(1), str(message.frm))
+        return self._lock(match.group(1), str(message.frm.person))
 
     @re_botcmd(pattern=r'^unlock ([\w]+)( |\.| --force)?$', prefixed=False)
     def re_unlock(self, message, match):
         force = '--force' in message.body
-        return self._unlock(match.group(1), str(message.frm), force)
+        return self._unlock(match.group(1), str(message.frm.person), force)
